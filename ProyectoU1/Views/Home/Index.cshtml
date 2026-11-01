@@ -1,8 +1,12 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+﻿@{ ViewData["Title"] = "Inicio"; }
+<section class="p-5 rounded-3 bg-light border my-4">
+    <p class="text-uppercase text-muted">Tu próxima película te espera</p>
+    <h1 class="display-5 fw-bold">Una historia para cada momento.</h1>
+    <p class="lead col-lg-8">Explora el catálogo, consulta las copias disponibles y administra tus alquileres desde un solo lugar.</p>
+    <a class="btn btn-primary btn-lg" asp-controller="Peliculas" asp-action="Index">Explorar catálogo</a>
+</section>
+<div class="row g-4">
+<div class="col-md-4"><h2 class="h5">1. Explora</h2><p>Busca una película y revisa su disponibilidad real.</p></div>
+<div class="col-md-4"><h2 class="h5">2. Alquila</h2><p>Reserva una copia con tu cuenta de cliente.</p></div>
+<div class="col-md-4"><h2 class="h5">3. Devuelve</h2><p>Registra la devolución y conserva tu historial.</p></div>
 </div>
