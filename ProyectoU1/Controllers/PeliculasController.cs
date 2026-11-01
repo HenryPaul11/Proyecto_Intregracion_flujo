@@ -63,6 +63,7 @@ public sealed class PeliculasController(PeliculaRepository repository) : Control
     [SessionAuthorize("Administrador"), HttpPost]
     public async Task<IActionResult> CambiarEstado(int id, bool activo)
     {
+        if (!ModelState.IsValid || id < 1) return BadRequest();
         if (!await repository.SetActiveAsync(id, activo)) return NotFound();
         TempData["Exito"] = activo ? "Película reactivada." : "Película desactivada. Se conserva su historial.";
         return RedirectToAction(nameof(Administrar));
