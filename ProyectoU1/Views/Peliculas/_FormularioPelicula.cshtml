@@ -1,0 +1,12 @@
+@model Pelicula
+<div class="row g-3">
+    <div class="col-md-8"><label asp-for="Titulo" class="form-label"></label><input asp-for="Titulo" class="form-control" /><span asp-validation-for="Titulo" class="text-danger"></span></div>
+    <div class="col-md-4"><label asp-for="Anio" class="form-label"></label><input asp-for="Anio" class="form-control" /><span asp-validation-for="Anio" class="text-danger"></span></div>
+    <div class="col-12"><label asp-for="Descripcion" class="form-label"></label><textarea asp-for="Descripcion" class="form-control" rows="3"></textarea><span asp-validation-for="Descripcion" class="text-danger"></span></div>
+    <div class="col-md-4"><label asp-for="IdiomaId" class="form-label"></label><select asp-for="IdiomaId" class="form-select" asp-items="@(new Microsoft.AspNetCore.Mvc.Rendering.SelectList(ViewBag.Idiomas, "Id", "Nombre"))"><option value="">Seleccionar idioma</option></select><span asp-validation-for="IdiomaId" class="text-danger"></span></div>
+    <div class="col-md-4"><label asp-for="Clasificacion" class="form-label"></label><select asp-for="Clasificacion" class="form-select"><option>G</option><option>PG</option><option>PG-13</option><option>R</option><option>NC-17</option></select><span asp-validation-for="Clasificacion" class="text-danger"></span></div>
+    <div class="col-md-4"><label asp-for="Duracion" class="form-label"></label><input asp-for="Duracion" class="form-control" /><span asp-validation-for="Duracion" class="text-danger"></span></div>
+    <div class="col-md-4"><label asp-for="DuracionAlquiler" class="form-label"></label><input asp-for="DuracionAlquiler" class="form-control" /><span asp-validation-for="DuracionAlquiler" class="text-danger"></span></div>
+    <div class="col-md-4"><label asp-for="Tarifa" class="form-label"></label><input asp-for="Tarifa" type="number" step="0.01" class="form-control" /><span asp-validation-for="Tarifa" class="text-danger"></span></div>
+    <div class="col-md-4"><label asp-for="CostoReposicion" class="form-label"></label><input asp-for="CostoReposicion" type="number" step="0.01" class="form-control" /><span asp-validation-for="CostoReposicion" class="text-danger"></span></div>
+</div>

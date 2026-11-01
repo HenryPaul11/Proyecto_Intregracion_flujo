@@ -1,0 +1,35 @@
+@model CatalogoModel
+@{ ViewData["Title"] = Model.Administracion ? "Administración" : "Catálogo"; }
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div><p class="text-muted mb-1">Sakila / películas</p><h1>@ViewData["Title"]</h1></div>
+    @if (Model.Administracion) { <a class="btn btn-primary" asp-action="Crear">Nueva película</a> }
+</div>
+<form method="get" class="row g-2 mb-4" asp-action="@(Model.Administracion ? "Administrar" : "Index")">
+    <div class="col-sm-8"><label for="buscar" class="visually-hidden">Buscar por título</label><input id="buscar" name="buscar" value="@Model.Buscar" maxlength="255" placeholder="Buscar por título…" class="form-control" /></div>
+    <div class="col-auto"><button class="btn btn-dark">Buscar</button></div>
+</form>
+<p class="text-muted">@Model.Total películas · página @Model.Pagina de @Model.Paginas</p>
+@if (Model.Peliculas.Count == 0) { <div class="alert alert-info">No se encontraron películas.</div> }
+<div class="row g-3">
+@foreach (var film in Model.Peliculas)
+{
+    <div class="col-md-6 col-xl-4"><div class="card h-100 shadow-sm"><div class="card-body d-flex flex-column">
+        <div class="d-flex justify-content-between mb-2"><span class="badge bg-secondary">@film.Clasificacion</span><span class="text-muted small">@film.Anio</span></div>
+        <h2 class="h5">@film.Titulo</h2>
+        <p class="text-muted small">@(film.Descripcion is { Length: > 150 } ? film.Descripcion[..150] + "…" : film.Descripcion)</p>
+        <div class="mt-auto"><partial name="_Disponibilidad" model="film" />
+            <a class="btn btn-outline-primary btn-sm mt-2" asp-action="Detalle" asp-route-id="@film.Id">Ver detalle</a>
+            @if (Model.Administracion)
+            {
+                <a class="btn btn-outline-secondary btn-sm mt-2" asp-action="Editar" asp-route-id="@film.Id">Editar</a>
+                <a class="btn btn-outline-secondary btn-sm mt-2" asp-action="Inventario" asp-route-id="@film.Id">Copias</a>
+                <form class="mt-2" asp-action="CambiarEstado" method="post"><input type="hidden" name="id" value="@film.Id" /><input type="hidden" name="activo" value="@((!film.Activo).ToString())" /><button class="btn btn-sm @(film.Activo ? "btn-outline-danger" : "btn-outline-success")">@(film.Activo ? "Desactivar" : "Reactivar")</button></form>
+            }
+        </div>
+    </div></div></div>
+}
+</div>
+<nav class="d-flex gap-2 my-4" aria-label="Páginas del catálogo">
+    @if (Model.Pagina > 1) { <a class="btn btn-outline-secondary" asp-action="@(Model.Administracion ? "Administrar" : "Index")" asp-route-buscar="@Model.Buscar" asp-route-pagina="@(Model.Pagina - 1)">Anterior</a> }
+    @if (Model.Pagina < Model.Paginas) { <a class="btn btn-outline-secondary" asp-action="@(Model.Administracion ? "Administrar" : "Index")" asp-route-buscar="@Model.Buscar" asp-route-pagina="@(Model.Pagina + 1)">Siguiente</a> }
+</nav>

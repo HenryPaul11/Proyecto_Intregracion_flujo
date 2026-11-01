@@ -23,6 +23,7 @@ builder.Services.AddSession(options =>
 });
 builder.Services.AddScoped<SqlConnectionFactory>();
 builder.Services.AddScoped<UsuarioRepository>();
+builder.Services.AddScoped<PeliculaRepository>();
 builder.Services.AddScoped<IPasswordHasher<Usuario>, PasswordHasher<Usuario>>();
 builder.Services.AddRateLimiter(options =>
 {

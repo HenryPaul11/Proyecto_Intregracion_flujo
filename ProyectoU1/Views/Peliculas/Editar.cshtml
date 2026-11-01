@@ -1,0 +1,10 @@
+@model Pelicula
+@{ ViewData["Title"] = Model.Id == 0 ? "Nueva película" : "Editar película"; }
+<h1>@ViewData["Title"]</h1>
+<form asp-action="Guardar" method="post" class="card card-body mt-3">
+    <input asp-for="Id" type="hidden" />
+    <div asp-validation-summary="All" class="text-danger" role="alert"></div>
+    <partial name="_FormularioPelicula" model="Model" />
+    <div class="mt-4"><button class="btn btn-primary">Guardar película</button><a class="btn btn-outline-secondary ms-2" asp-action="Administrar">Cancelar</a></div>
+</form>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

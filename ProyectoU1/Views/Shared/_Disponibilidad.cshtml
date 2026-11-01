@@ -1,0 +1,4 @@
+@model Pelicula
+@if (!Model.Activo) { <span class="badge bg-dark">Película inactiva</span> }
+else if (Model.Disponibles > 0) { <span class="badge bg-success">@Model.Disponibles de @Model.Copias copias disponibles</span> }
+else { <span class="badge bg-secondary">Sin copias disponibles</span> }
