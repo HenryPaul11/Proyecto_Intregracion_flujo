@@ -1,0 +1,19 @@
+@model AlquileresModel
+@{ ViewData["Title"] = Model.Administracion ? "Todos los alquileres" : "Mis alquileres"; }
+<h1>@ViewData["Title"]</h1>
+<p class="text-muted">Los pendientes aparecen primero. Las devoluciones permanecen en el historial.</p>
+<div class="table-responsive"><table class="table table-striped align-middle"><thead><tr><th>N.º / Copia</th><th>Película</th>@if (Model.Administracion) { <th>Cliente</th> }<th>Alquiler</th><th>Vencimiento</th><th>Estado / Devolución</th>@if (!Model.Administracion) { <th>Acción</th> }</tr></thead><tbody>
+@foreach (var rental in Model.Alquileres)
+{
+    <tr><td>@rental.Id / @rental.CopiaId</td><td>@rental.Pelicula</td>@if (Model.Administracion) { <td>@rental.Cliente</td> }<td>@rental.Fecha.ToString("dd/MM/yyyy HH:mm")</td><td>@rental.Vencimiento.ToString("dd/MM/yyyy")</td><td>@if (rental.Devolucion.HasValue) { <span>Devuelto: @rental.Devolucion.Value.ToString("dd/MM/yyyy HH:mm")</span> } else { <span class="badge bg-warning text-dark">Pendiente</span> }</td>
+    @if (!Model.Administracion)
+    {
+        <td>@if (!rental.Devolucion.HasValue) { <form asp-action="Devolver" method="post"><input type="hidden" name="id" value="@rental.Id" /><button class="btn btn-outline-primary btn-sm">Devolver</button></form> }</td>
+    }</tr>
+}
+</tbody></table></div>
+@if (Model.Alquileres.Count == 0) { <p>No hay alquileres para mostrar.</p> }
+<nav class="d-flex gap-2 my-3" aria-label="Páginas de alquileres">
+@if (Model.Pagina > 1) { <a class="btn btn-outline-secondary" asp-action="@(Model.Administracion ? "Todos" : "Index")" asp-route-pagina="@(Model.Pagina - 1)">Anterior</a> }
+@if (Model.HayMas) { <a class="btn btn-outline-secondary" asp-action="@(Model.Administracion ? "Todos" : "Index")" asp-route-pagina="@(Model.Pagina + 1)">Siguiente</a> }
+</nav>

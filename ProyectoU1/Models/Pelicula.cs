@@ -16,11 +16,11 @@ public sealed class Pelicula
     public byte IdiomaId { get; set; }
     [Range(1, 255), Display(Name = "Días de alquiler")]
     public byte DuracionAlquiler { get; set; } = 3;
-    [Range(typeof(decimal), "0.01", "99.99"), Display(Name = "Tarifa de alquiler")]
+    [Range(typeof(decimal), "0.01", "99.99", ParseLimitsInInvariantCulture = true), Display(Name = "Tarifa de alquiler")]
     public decimal Tarifa { get; set; } = 4.99m;
     [Range(1, 32767), Display(Name = "Duración (minutos)")]
     public short? Duracion { get; set; }
-    [Range(typeof(decimal), "0.01", "999.99"), Display(Name = "Costo de reposición")]
+    [Range(typeof(decimal), "0.01", "999.99", ParseLimitsInInvariantCulture = true), Display(Name = "Costo de reposición")]
     public decimal CostoReposicion { get; set; } = 19.99m;
     [Required, RegularExpression("^(G|PG|PG-13|R|NC-17)$"), Display(Name = "Clasificación")]
     public string Clasificacion { get; set; } = "G";

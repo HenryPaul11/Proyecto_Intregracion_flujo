@@ -5,6 +5,12 @@ using ProyectoU1.Models;
 using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
+// Los inputs numéricos HTML usan punto decimal; el texto y las fechas se presentan en español.
+var culture = (System.Globalization.CultureInfo)System.Globalization.CultureInfo.GetCultureInfo("es-EC").Clone();
+culture.NumberFormat.NumberDecimalSeparator = ".";
+culture.NumberFormat.NumberGroupSeparator = ",";
+System.Globalization.CultureInfo.DefaultThreadCurrentCulture = culture;
+System.Globalization.CultureInfo.DefaultThreadCurrentUICulture = System.Globalization.CultureInfo.GetCultureInfo("es-EC");
 builder.Configuration.AddJsonFile("appsettings.Local.json", optional: true, reloadOnChange: true)
     .AddEnvironmentVariables();
 
@@ -24,6 +30,7 @@ builder.Services.AddSession(options =>
 builder.Services.AddScoped<SqlConnectionFactory>();
 builder.Services.AddScoped<UsuarioRepository>();
 builder.Services.AddScoped<PeliculaRepository>();
+builder.Services.AddScoped<AlquilerRepository>();
 builder.Services.AddScoped<IPasswordHasher<Usuario>, PasswordHasher<Usuario>>();
 builder.Services.AddRateLimiter(options =>
 {
