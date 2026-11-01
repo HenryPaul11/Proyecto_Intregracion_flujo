@@ -61,6 +61,13 @@ $copyId = [regex]::Match($copyPage.Content, 'name="copiaId" value="(\d+)"').Grou
 Assert-Flow ([bool]$copyId) 'Copia registrada en inventario'
 
 try {
+    Send-Form $admin '/Peliculas/Administrar' '/Peliculas/CambiarEstado' @{id=$filmId;activo='valor-invalido'} | Out-Null
+    throw 'El cambio de estado acepto un booleano invalido'
+} catch {
+    Assert-Flow ($_.Exception.Response -and [int]$_.Exception.Response.StatusCode -eq 400) 'Cambio de estado invalido rechazado antes de persistir'
+}
+
+try {
     Invoke-WebRequest "$BaseUrl/Alquileres/Alquilar" -Method Post -WebSession $client -Body @{peliculaId=$filmId} -UseBasicParsing | Out-Null
     throw 'La operacion acepto una peticion sin CSRF'
 } catch {

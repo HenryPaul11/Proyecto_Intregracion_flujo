@@ -22,8 +22,11 @@ public sealed class UsuarioRepository(SqlConnectionFactory factory)
         if (!await reader.ReadAsync()) return null;
         return new Usuario
         {
-            Id = reader.GetInt32(0), Nombre = reader.GetString(1), Login = reader.GetString(2),
-            PasswordHash = reader.GetString(3), Rol = reader.GetString(4),
+            Id = reader.GetInt32(0),
+            Nombre = reader.GetString(1),
+            Login = reader.GetString(2),
+            PasswordHash = reader.GetString(3),
+            Rol = reader.GetString(4),
             CustomerId = reader.IsDBNull(5) ? null : reader.GetInt32(5),
             StaffId = reader.IsDBNull(6) ? null : reader.GetByte(6)
         };

@@ -16,12 +16,19 @@ public sealed class PeliculaRepository(SqlConnectionFactory factory)
 
     private static Pelicula Read(SqlDataReader r) => new()
     {
-        Id = r.GetInt32(0), Titulo = r.GetString(1), Descripcion = r.IsDBNull(2) ? null : r.GetString(2),
+        Id = r.GetInt32(0),
+        Titulo = r.GetString(1),
+        Descripcion = r.IsDBNull(2) ? null : r.GetString(2),
         Anio = !r.IsDBNull(3) && int.TryParse(r.GetValue(3).ToString(), out var year) ? year : null,
-        IdiomaId = r.GetByte(4), DuracionAlquiler = r.GetByte(5), Tarifa = r.GetDecimal(6),
-        Duracion = r.IsDBNull(7) ? null : r.GetInt16(7), CostoReposicion = r.GetDecimal(8),
-        Clasificacion = r.IsDBNull(9) ? "G" : r.GetString(9), Activo = r.GetBoolean(10),
-        Copias = r.GetInt32(11), Disponibles = r.GetInt32(12)
+        IdiomaId = r.GetByte(4),
+        DuracionAlquiler = r.GetByte(5),
+        Tarifa = r.GetDecimal(6),
+        Duracion = r.IsDBNull(7) ? null : r.GetInt16(7),
+        CostoReposicion = r.GetDecimal(8),
+        Clasificacion = r.IsDBNull(9) ? "G" : r.GetString(9),
+        Activo = r.GetBoolean(10),
+        Copias = r.GetInt32(11),
+        Disponibles = r.GetInt32(12)
     };
 
     public async Task<CatalogoModel> ListAsync(string? buscar, int pagina, bool admin)
