@@ -70,11 +70,13 @@ public sealed class PeliculasController(PeliculaRepository repository) : Control
     }
 
     [SessionAuthorize("Administrador")]
-    public async Task<IActionResult> Inventario(int id)
+    public async Task<IActionResult> Inventario(int id, int pagina = 1)
     {
         var film = await repository.GetAsync(id);
         if (film is null) return NotFound();
-        return View(new InventarioModel(film, await repository.CopiesAsync(id), await repository.TiendasAsync()));
+        pagina = Math.Clamp(pagina, 1, 100000);
+        var copias = await repository.CopiesAsync(id, pagina);
+        return View(new InventarioModel(film, copias.Take(20).ToList(), await repository.TiendasAsync(), pagina, copias.Count > 20));
     }
 
     [SessionAuthorize("Administrador"), HttpPost]

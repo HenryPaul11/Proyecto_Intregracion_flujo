@@ -16,7 +16,15 @@ builder.Configuration.AddJsonFile("appsettings.Local.json", optional: true, relo
 
 // Add services to the container.
 builder.Services.AddControllersWithViews(options =>
-    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()));
+    {
+    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+    var messages = options.ModelBindingMessageProvider;
+    messages.SetValueMustNotBeNullAccessor(_ => "Este campo es obligatorio.");
+    messages.SetAttemptedValueIsInvalidAccessor((_, field) => $"El valor de {field} no es válido.");
+    messages.SetValueMustBeANumberAccessor(field => $"El campo {field} debe ser un número.");
+    messages.SetNonPropertyAttemptedValueIsInvalidAccessor(_ => "El valor ingresado no es válido.");
+    messages.SetUnknownValueIsInvalidAccessor(field => $"El valor de {field} no es válido.");
+});
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
@@ -56,6 +64,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStatusCodePagesWithReExecute("/Home/Estado/{0}");
 app.UseRouting();
 app.UseSession();
 app.UseRateLimiter();

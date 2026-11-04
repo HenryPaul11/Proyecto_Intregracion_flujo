@@ -1,0 +1,4 @@
+﻿jQuery.extend(jQuery.validator.messages, {
+ required: 'Este campo es obligatorio.', remote: 'Revise este campo.', email: 'Ingrese un correo electrónico válido.', url: 'Ingrese una dirección web válida.', date: 'Ingrese una fecha válida.', dateISO: 'Ingrese una fecha válida.', number: 'Ingrese un número válido.', digits: 'Ingrese solo dígitos.', equalTo: 'Ingrese el mismo valor nuevamente.',
+ maxlength: jQuery.validator.format('No ingrese más de {0} caracteres.'), minlength: jQuery.validator.format('Ingrese al menos {0} caracteres.'), rangelength: jQuery.validator.format('Ingrese entre {0} y {1} caracteres.'), range: jQuery.validator.format('Ingrese un valor entre {0} y {1}.'), max: jQuery.validator.format('Ingrese un valor menor o igual a {0}.'), min: jQuery.validator.format('Ingrese un valor mayor o igual a {0}.'), step: jQuery.validator.format('Ingrese un múltiplo de {0}.')
+});

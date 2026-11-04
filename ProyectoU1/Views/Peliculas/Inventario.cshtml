@@ -1,4 +1,5 @@
 @model InventarioModel
+@{ ViewData["TablePage"] = true; }
 @{ ViewData["Title"] = "Inventario"; }
 <a asp-action="Administrar">← Administración</a>
 <h1 class="mt-3">Copias de @Model.Pelicula.Titulo</h1>
@@ -11,7 +12,7 @@
         <button class="btn btn-primary">Agregar copia</button>
     </form>
 }
-<div class="table-responsive mt-4"><table class="table table-striped align-middle"><thead><tr><th>Copia</th><th>Tienda</th><th>Estado</th><th>Acción</th></tr></thead><tbody>
+<div tabindex="0" role="region" aria-label="Tabla de copias" class="table-responsive mt-4"><table class="table table-striped align-middle"><thead><tr><th>Copia</th><th>Tienda</th><th>Estado</th><th>Acción</th></tr></thead><tbody>
 @foreach (var copy in Model.Copias)
 {
     <tr><td>@copy.Id</td><td>@copy.TiendaId</td><td>@(!copy.Activa ? "Retirada" : copy.Alquilada ? "Alquilada" : "Disponible")</td><td>
@@ -21,3 +22,8 @@
 }
 </tbody></table></div>
 @if (Model.Copias.Count == 0) { <p>No hay copias registradas. Agrega una para permitir el alquiler.</p> }
+<nav class="d-flex gap-2 my-3" aria-label="Páginas de inventario">
+    <span class="pagination-label">Página @Model.Pagina · @Model.Copias.Count copias</span>
+    @if (Model.Pagina > 1) { <a class="btn btn-outline-secondary" asp-action="Inventario" asp-route-id="@Model.Pelicula.Id" asp-route-pagina="@(Model.Pagina - 1)">Anterior</a> }
+    @if (Model.HayMas) { <a class="btn btn-outline-secondary" asp-action="Inventario" asp-route-id="@Model.Pelicula.Id" asp-route-pagina="@(Model.Pagina + 1)">Siguiente</a> }
+</nav>

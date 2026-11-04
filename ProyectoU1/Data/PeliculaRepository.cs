@@ -110,14 +110,16 @@ public sealed class PeliculaRepository(SqlConnectionFactory factory)
         return await command.ExecuteNonQueryAsync() > 0;
     }
 
-    public async Task<IReadOnlyList<Copia>> CopiesAsync(int filmId)
+    public async Task<IReadOnlyList<Copia>> CopiesAsync(int filmId, int pagina = 1)
     {
         await using var connection = await factory.OpenAsync();
         await using var command = new SqlCommand("""
             SELECT i.inventory_id, i.store_id, i.activo,
             CAST(CASE WHEN EXISTS(SELECT 1 FROM dbo.rental r WHERE r.inventory_id=i.inventory_id AND r.return_date IS NULL) THEN 1 ELSE 0 END AS bit)
             FROM dbo.inventory i WHERE i.film_id=@id ORDER BY i.inventory_id
+            OFFSET @offset ROWS FETCH NEXT 21 ROWS ONLY
             """, connection);
+        command.Parameters.Add("@offset", SqlDbType.Int).Value = (Math.Clamp(pagina, 1, 100000) - 1) * 20;
         command.Parameters.Add("@id", SqlDbType.Int).Value = filmId;
         await using var reader = await command.ExecuteReaderAsync();
         var copies = new List<Copia>();

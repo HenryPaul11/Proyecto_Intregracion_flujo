@@ -1,12 +1,11 @@
 ﻿@{ ViewData["Title"] = "Inicio"; }
-<section class="p-5 rounded-3 bg-light border my-4">
-    <p class="text-uppercase text-muted">Tu próxima película te espera</p>
-    <h1 class="display-5 fw-bold">Una historia para cada momento.</h1>
-    <p class="lead col-lg-8">Explora el catálogo, consulta las copias disponibles y administra tus alquileres desde un solo lugar.</p>
-    <a class="btn btn-primary btn-lg" asp-controller="Peliculas" asp-action="Index">Explorar catálogo</a>
+<section class="cinema-hero">
+    <div class="hero-copy"><p class="eyebrow">SAKILA / CINE EN CASA</p><h1>Hay historias que<br />merecen quedarse.</h1><p class="hero-description">Descubre tu próxima película favorita. Explora la colección y encuentra la historia perfecta para hoy.</p><a class="btn hero-button" asp-controller="Peliculas" asp-action="Index">Descubrir el catálogo <span aria-hidden="true">↗</span></a></div>
+    <div class="hero-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="cinema-ticket"><span>SAKILA CINEMA</span><strong>Tu entrada<br />a otra historia.</strong><div class="ticket-rule"></div><small>EL MEJOR PLAN EMPIEZA AQUÍ</small><div class="ticket-bars"></div></div><span class="art-caption">UNA COLECCIÓN. MIL FORMAS DE SENTIR.</span></div>
 </section>
-<div class="row g-4">
-<div class="col-md-4"><h2 class="h5">1. Explora</h2><p>Busca una película y revisa su disponibilidad real.</p></div>
-<div class="col-md-4"><h2 class="h5">2. Alquila</h2><p>Reserva una copia con tu cuenta de cliente.</p></div>
-<div class="col-md-4"><h2 class="h5">3. Devuelve</h2><p>Registra la devolución y conserva tu historial.</p></div>
+<div class="collection-heading mb-4"><div><p class="eyebrow">TU NOCHE DE CINE, EN TRES PASOS</p><h2>Elige. Disfruta. Repite.</h2></div></div>
+<div class="row g-4 home-steps">
+    <div class="col-md-4"><div class="home-step"><span>01</span><h2 class="h5">Encuentra tu historia</h2><p class="text-muted">Explora el catálogo, busca por título y consulta las copias disponibles.</p></div></div>
+    <div class="col-md-4"><div class="home-step"><span>02</span><h2 class="h5">Hazla parte de tu noche</h2><p class="text-muted">Alquila una copia desde tu cuenta. Nosotros nos encargamos de asignarla.</p></div></div>
+    <div class="col-md-4"><div class="home-step"><span>03</span><h2 class="h5">Vuelve por más</h2><p class="text-muted">Registra tu devolución y conserva el historial de las películas que disfrutaste.</p></div></div>
 </div>

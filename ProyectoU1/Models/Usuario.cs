@@ -15,11 +15,11 @@ public sealed class Usuario
 
 public sealed class LoginModel
 {
-    [Required(ErrorMessage = "Ingrese su usuario."), StringLength(80)]
+    [Required(ErrorMessage = "Ingrese su usuario."), StringLength(80, ErrorMessage = "El usuario no puede superar los 80 caracteres.")]
     [Display(Name = "Usuario")]
     public string Login { get; set; } = "";
 
-    [Required(ErrorMessage = "Ingrese su contraseña."), StringLength(128), DataType(DataType.Password)]
+    [Required(ErrorMessage = "Ingrese su contraseña."), StringLength(128, ErrorMessage = "La contraseña no puede superar los 128 caracteres."), DataType(DataType.Password)]
     [Display(Name = "Contraseña")]
     public string Password { get; set; } = "";
 }

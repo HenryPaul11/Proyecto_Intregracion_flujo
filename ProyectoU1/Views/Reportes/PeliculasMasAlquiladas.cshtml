@@ -1,8 +1,9 @@
 @model IReadOnlyList<PeliculaReporte>
+@{ ViewData["TablePage"] = true; }
 @{ ViewData["Title"] = "Películas más alquiladas"; }
 <p class="text-muted">Reportes / historial completo</p>
 <h1>Las 10 películas más alquiladas</h1>
 <p>El reporte cuenta los alquileres históricos, incluidas las películas y copias retiradas.</p>
-<div class="table-responsive"><table class="table table-striped"><thead><tr><th>Película</th><th>Cantidad de alquileres</th></tr></thead><tbody>
+<div tabindex="0" role="region" aria-label="Tabla de registros" class="table-responsive"><table class="table table-striped"><thead><tr><th>Película</th><th>Cantidad de alquileres</th></tr></thead><tbody>
 @foreach (var item in Model) { <tr><td>@item.Titulo</td><td>@item.Cantidad</td></tr> }
 </tbody></table></div>

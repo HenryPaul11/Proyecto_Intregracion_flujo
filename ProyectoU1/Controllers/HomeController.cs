@@ -16,6 +16,15 @@ namespace ProyectoU1.Controllers
             return View();
         }
 
+        [IgnoreAntiforgeryToken]
+        [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
+        public IActionResult Estado(int id)
+        {
+            if (id < 400 || id > 599) id = StatusCodes.Status404NotFound;
+            Response.StatusCode = id;
+            return View(id);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

@@ -1,0 +1,32 @@
+@model int
+@{
+    var denied = Model == 403;
+    var missing = Model == 404;
+    ViewData["Title"] = denied ? "Acceso denegado" : missing ? "Página no encontrada" : "No pudimos completar la solicitud";
+    var signedIn = Context.Session.GetInt32("UsuarioId").HasValue;
+}
+<section class="status-page" aria-labelledby="status-title">
+    <div class="status-art" aria-hidden="true">
+        <span class="status-art-label">SAKILA / FUERA DE ESCENA</span>
+        <div class="status-orbit"></div>
+        <span class="status-number">@Model</span>
+        <span class="status-art-caption">@(denied ? "ESTA SALA TIENE ACCESO RESTRINGIDO" : "HAY MÁS HISTORIAS POR DESCUBRIR")</span>
+    </div>
+    <div class="status-copy">
+        <p class="eyebrow">@(denied ? "ACCESO RESTRINGIDO" : missing ? "ESCENA NO ENCONTRADA" : "SOLICITUD INTERRUMPIDA")</p>
+        <h1 id="status-title">@(denied ? "Esta función requiere otro acceso." : missing ? "Esta escena no está en el guion." : "Hagamos una pausa.")</h1>
+        <p class="status-description">@(denied ? "Tu cuenta no tiene permisos para acceder a esta sección. Puedes volver al catálogo y seguir explorando las opciones disponibles para ti." : missing ? "La página que buscas no existe o ya no está disponible. Vuelve al inicio o encuentra tu próxima película en el catálogo." : "No pudimos completar tu solicitud. Vuelve al inicio para continuar navegando.")</p>
+        <div class="status-actions">
+            <a class="btn btn-primary" asp-controller="Home" asp-action="Index">Volver al inicio <span aria-hidden="true">↗</span></a>
+            @if (signedIn)
+            {
+                <a class="btn btn-outline-secondary" asp-controller="Peliculas" asp-action="Index">Explorar catálogo</a>
+            }
+            else
+            {
+                <a class="btn btn-outline-secondary" asp-controller="Cuenta" asp-action="Login">Iniciar sesión</a>
+            }
+        </div>
+        <p class="status-reference">Error @Model · @ViewData["Title"]</p>
+    </div>
+</section>

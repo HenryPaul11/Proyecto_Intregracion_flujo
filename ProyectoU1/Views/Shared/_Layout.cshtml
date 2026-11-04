@@ -4,12 +4,20 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] · Sakila</title>
+    <script>
+        (() => {
+            let theme;
+            try { theme = localStorage.getItem('sakila-theme'); } catch { }
+            document.documentElement.dataset.theme = theme === 'dark' || theme === 'light'
+                ? theme : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        })();
+    </script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
-<body>
+<body class="@(ViewData["TablePage"] is true ? "table-screen" : "")">
 <header>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+<nav class="navbar navbar-expand-lg navbar-dark app-navbar mb-4">
 <div class="container">
     <a class="navbar-brand fw-bold" asp-controller="Home" asp-action="Index">SAKILA <small class="fw-normal">/ cine en casa</small></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Abrir navegación"><span class="navbar-toggler-icon"></span></button>
@@ -28,6 +36,9 @@
             }
         }
         </ul>
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Activar modo oscuro" aria-pressed="false">
+            <span class="theme-icon" aria-hidden="true">◐</span><span id="theme-label">Modo oscuro</span>
+        </button>
         @if (Context.Session.GetInt32("UsuarioId").HasValue)
         {
             <span class="text-white small me-3">@Context.Session.GetString("Nombre") · @Context.Session.GetString("Rol")</span>
@@ -42,9 +53,10 @@
     <partial name="_Mensajes" />
     @RenderBody()
 </main>
-<footer class="border-top py-3 text-muted"><div class="container small">Sakila · Sistema de renta de películas · ASP.NET Core MVC</div></footer>
+<footer class="border-top py-3 text-muted"><div class="container small d-flex justify-content-between flex-wrap gap-2"><span>SAKILA / cine en casa</span><span>Una historia para cada momento.</span></div></footer>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
 @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
